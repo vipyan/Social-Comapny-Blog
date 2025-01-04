@@ -42,6 +42,12 @@ LETS Company Blog is a Flask-based web application designed for creating and sha
    ```
    Visit `http://127.0.0.1:5000/` in your browser.
 
+## Deployment
+
+The LETS Company Blog has been deployed on Heroku. You can access the live application at:
+
+[LETS Company Blog on Heroku](https://lets-company-blog-a636485104e1.herokuapp.com/)
+
 ## File Structure
 
 - **`app.py`**: Entry point of the application.
