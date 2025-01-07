@@ -95,6 +95,16 @@ Meaningful error pages (403 and 404) were added to enhance user experience and p
 
 ---
 
+## Video Demo
+Check out the project in action: [LETS Company Blog Video Demo](https://youtu.be/81DOnO989ME)
+
+---
+
+## Live Website
+Explore the live application here: [LETS Company Blog](https://lets-company-blog-a636485104e1.herokuapp.com/)
+
+---
+
 ## Conclusion
 The **LETS Company Blog** is a comprehensive Flask application that highlights key web development skills, including back-end programming, database management, front-end integration, and security. With additional features like comments and admin roles, it could evolve into a full-fledged blogging platform. This project represents my dedication to learning and implementing modern web development practices, and I am proud of its outcome.
 
