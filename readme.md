@@ -1,78 +1,100 @@
-# LETS Company Blog
+# README.md
 
-LETS Company Blog is a Flask-based web application designed for creating and sharing blog posts. The application includes user registration, authentication, profile management, and CRUD (Create, Read, Update, Delete) functionality for blog posts.
+## Overview
 
-## Features
+Welcome to the **LETS Company Blog**, a feature-rich social blogging platform built using Flask. This project is the culmination of my efforts to design and implement a full-stack web application that emphasizes modular design, user interaction, and robust functionality. The application allows users to register, log in, create blog posts, manage their profiles, and browse content posted by others. It also includes custom error handling for seamless user experiences.
 
-- User registration and login with secure password handling.
-- Profile management, including updating usernames, emails, and profile pictures.
-- Create, read, update, and delete blog posts.
-- Pagination for viewing blog posts.
-- Error handling for 404 and 403 errors.
+This project was developed with scalability, security, and responsiveness in mind. Leveraging Bootstrap for the front-end and Flask's extensions for the back-end, the blog ensures a professional appearance and smooth operation across various devices.
 
-## Installation
+---
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/your-username/LETScompanyblog.git
-   cd LETScompanyblog
-   ```
+## Files and Their Purpose
 
-2. **Set up a Virtual Environment:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
+### Core Files
+- **`app.py`**:
+  This is the entry point of the application. It initializes the Flask app and runs it in debug mode for development purposes.
 
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+- **`LETScompanyblog/__init__.py`**:
+  Initializes the Flask application, database, and login manager. It also registers blueprints for modular routing and ensures that configurations, like the `SECRET_KEY` and database URI, are properly set up.
 
-4. **Set Up the Database:**
-   ```bash
-   flask db init
-   flask db migrate -m "Initial migration."
-   flask db upgrade
-   ```
+- **`LETScompanyblog/models.py`**:
+  Contains the database schema and models for the application. It includes the `User` model for handling user authentication and profile management, and the `BlogPost` model for storing blog content.
 
-5. **Run the Application:**
-   ```bash
-   flask run
-   ```
-   Visit `http://127.0.0.1:5000/` in your browser.
+### Modules
+- **`LETScompanyblog/core`**:
+  - **`views.py`**: Contains routes for the homepage (`/`) and the info page (`/info`). The homepage lists recent blog posts with pagination, while the info page provides details about the company.
 
-## Deployment
+- **`LETScompanyblog/blog_posts`**:
+  - **`forms.py`**: Defines a form for creating and editing blog posts, including fields for the title and content.
+  - **`views.py`**: Implements CRUD operations for blog posts. Users can create, read, update, and delete their posts. Authorization checks ensure that only the author can modify or delete posts.
 
-The LETS Company Blog has been deployed on Heroku. You can access the live application at:
+- **`LETScompanyblog/users`**:
+  - **`forms.py`**: Includes forms for user registration, login, and profile updates. It ensures validation for unique emails and usernames.
+  - **`views.py`**: Handles user registration, login, logout, and account management. It also includes functionality to display all posts by a specific user.
+  - **`picture_handler.py`**: Processes and resizes uploaded profile pictures, ensuring consistent dimensions for display.
 
-[LETS Company Blog on Heroku](https://lets-company-blog-a636485104e1.herokuapp.com/)
+- **`LETScompanyblog/error_pages`**:
+  - **`handlers.py`**: Contains custom error handlers for 403 (Forbidden) and 404 (Not Found) errors. It ensures users receive meaningful feedback when encountering these issues.
 
-## File Structure
+### Templates
+- **Base Templates**:
+  - **`base.html`**: The primary layout file that includes navigation and defines blocks for extending other pages.
+- **Specific Pages**:
+  - **`index.html`**: Displays recent blog posts with pagination.
+  - **`register.html`**: User registration page with a Bootstrap-styled form.
+  - **`login.html`**: Login page featuring flash message integration.
+  - **`account.html`**: Profile management page where users can update their details and profile picture.
+  - **`create_post.html`**: Form for creating or editing a blog post.
+  - **`user_blog_posts.html`**: Displays all posts by a specific user.
+  - **Error Templates**:
+    - **`403.html`** and **`404.html`**: Custom error pages for forbidden access and missing resources.
 
-- **`app.py`**: Entry point of the application.
-- **`models.py`**: Database models for users and blog posts.
-- **`forms.py`**: WTForms for user registration, login, and post creation.
-- **`handlers.py`**: Handles error pages and routes.
-- **`views.py`**: Contains views for user and blog post functionality.
-- **Templates**: HTML templates for rendering pages.
-- **Static**: Contains static assets like profile pictures.
+### Static Files
+- **Profile Pictures**:
+  - Stored in the `static/profile_pics` directory. Includes default and user-uploaded profile images.
 
-## Key Packages Used
+### Database
+- **`data.sqlite`**:
+  The SQLite database file storing user and blog post data.
 
-- `Flask`
-- `Flask-SQLAlchemy`
-- `Flask-Migrate`
-- `Flask-WTF`
-- `Flask-Login`
+---
 
-## How to Contribute
+## Design Choices
 
-1. Fork the repository.
-2. Create a new branch for your feature/bugfix.
-3. Make your changes and ensure the app runs correctly.
-4. Push your branch and create a pull request.
+### Modular Architecture
+One of the key design decisions was to use Flask's blueprint system to organize routes and views into separate modules (`core`, `blog_posts`, `users`, `error_pages`). This ensures scalability and maintainability as the application grows.
 
-## License
+### Security
+- Passwords are hashed using `werkzeug.security` to ensure user credentials are secure.
+- Forms are protected from CSRF attacks using Flask-WTF's built-in capabilities.
+- File uploads are restricted to `.jpg` and `.png` formats and resized to a standard size before storage.
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+### Responsive Design
+Bootstrap was chosen to provide a clean and responsive front-end design. This decision simplifies styling while ensuring the app functions well on various devices.
+
+### Pagination
+Pagination for blog posts was implemented to improve usability and reduce load times for pages with many posts. Flask-SQLAlchemy's `paginate` function made this feature straightforward to implement.
+
+### Custom Error Pages
+Meaningful error pages (403 and 404) were added to enhance user experience and provide feedback in case of navigation issues.
+
+---
+
+## Challenges and Design Trade-Offs
+1. **Database Choice**:
+   - SQLite was chosen for simplicity, but it may require migration to a more robust database like PostgreSQL for larger-scale deployment.
+
+2. **User Profile Images**:
+   - The current implementation stores images locally. This simplifies the process but could be replaced with a cloud storage solution for better scalability.
+
+3. **Authorization**:
+   - A basic user role system could be added in the future to differentiate between admins and regular users.
+
+4. **Deployment**:
+   - While the app is configured for development (`debug=True`), additional steps like using environment variables and configuring a production-ready web server are needed for deployment.
+
+---
+
+## Conclusion
+The **LETS Company Blog** is a comprehensive Flask application that highlights key web development skills, including back-end programming, database management, front-end integration, and security. With additional features like comments and admin roles, it could evolve into a full-fledged blogging platform. This project represents my dedication to learning and implementing modern web development practices, and I am proud of its outcome.
+
